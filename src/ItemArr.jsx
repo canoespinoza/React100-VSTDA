@@ -1,0 +1,3 @@
+class ItemArray extends Component {
+    
+}
