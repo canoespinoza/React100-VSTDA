@@ -1,36 +1,39 @@
 import React, { Component } from 'react';
 
-import AddToDo from './AddToDo.jsx';
-import ViewToDo from './ViewToDo.jsx';
+import AddToDo from './AddToDo';
+import ViewToDo from './ViewToDo';
+//import EditToDo from './EditToDo';
+//import Items from './Items';
 //import EditToDo from './EditToDo.jsx';
 
-
 class App extends Component {
-   constructor(props) {
+  constructor(props){
     super(props);
-    this.state = {
-        todoItemArray : [],
+    this.state ={
+      itemArr : [],
     }
-this.add = this.state.bind(this)
+  this.addToArr = this.addToArr.bind(this)
   }
 
-  add(title, priority){
-    const newTodo = {
-      title,
-      priority,
-    };
-    this.setState({todoItemArray: this.state.todoItemArray, newTodo}) 
+  addToArr(newTodo) {
+    this.state.itemArr.push(newTodo);
+    this.setState({ itemArr: this.state.itemArr})
+  }
+
+  deleteFromArr(newTodo) {
+    
   }
 
   render() {
     return (
       <div className='container'>
-          <h1 className='text-dark'>Very Simple To Do App</h1>
-          <p className='text-dark'>Keep track of everything you need to get done!</p>
+          <h1>Very Simple To Do App</h1>
+          <p>Keep track of everything you need to get done!</p>
         <hr className='tagline'></hr>
         <div className='row'>
-          <AddToDo add={this.add}/>
-          <ViewToDo/>
+          <AddToDo addToArr={this.addToArr}/>
+          <ViewToDo itemArr={this.state.itemArr}/>
+  
         </div>
       </div>
     );
