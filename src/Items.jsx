@@ -1,55 +1,80 @@
-import React, {Component} from 'react';
-import EditToDo from './EditToDo';
+import React, { Component } from "react";
+import EditToDo from "./EditToDo";
 
 class Items extends Component {
   constructor(props) {
     super(props);
-    this.state={
-      completed : false,
-      beingEdited : false
-    }
+    this.state = {
+      completed: false,
+      beingEdited: false
+    };
     this.alertColor = this.alertColor.bind(this);
-    this.edit = this.edit.bind(this)
+    this.handleEditClick = this.handleEditClick.bind(this);
+    this.handleCompletedClick = this.handleCompletedClick.bind(this);
+    this.handleDeleteClick = this.handleDeleteClick.bind(this);
   }
 
   alertColor(priority) {
-    console.log(priority)
-    if (priority === '1') {
+    if (priority === "1") {
       return "list-group-item-success";
-    } else if (priority === '2') {
+    } else if (priority === "2") {
       return "list-group-item-warning";
-    } else if (priority === '3') {
-      console.log("here")
+    } else if (priority === "3") {
       return "list-group-item-danger";
     }
   }
 
-  //write completed function/ checkbox functionality
+  handleCompletedClick() {
+    this.props.completedToDo(this.props.id);
+  }
 
-  //write beingEDited function
-  edit(beingEdited) {
-    if (beingEdited == true) {
-      return <EditToDo/>
-    }
-    else if (beingEdited == false)
-      return 
+  handleEditClick() {
+    this.props.editToDo(this.props.id);
+  }
+
+  handleDeleteClick() {
+    this.props.deleteFromArr(this.props.id);
   }
 
   render() {
-  console.log(this.props.priority)
     return (
-        <li className={this.alertColor(this.props.priority)}>
-          <button type="checkbox" />
-          {this.props.title}
-          <div className='text-right'>
-            <button className='btn btn-primary'>
-              <i className="fas fa-trash-alt" />
-            </button>
-            <button className='btn btn-primary' onClick={this.edit}>
-              <i className="fas fa-pencil-alt" />
-            </button>
-          </div>
-        </li>
+      <div>
+        {!this.props.beingEdited ? (
+          <li className={this.alertColor(this.props.priority)}>
+            <button type="checkbox" onClick={this.handleCompletedClick} />
+            {!this.props.completed ? (
+              <span>{this.props.title}</span>
+            ) : (
+              <s>{this.props.title}</s>
+            )}
+            <div className="text-right">
+              <button>
+                <a
+                  id="delete-button"
+                  className="delete-todo"
+                  onClick={this.handleDeleteClick}
+                >
+                  <i className="fas fa-trash-alt" />
+                </a>
+              </button>
+              <button>
+                <a
+                  id="edit-button"
+                  className="edit-todo"
+                  onClick={this.handleEditClick}
+                >
+                  <i className="fas fa-pencil-alt" />
+                </a>
+              </button>
+            </div>
+          </li>
+        ) : (
+          <EditToDo
+            id={this.props.id}
+            updateToDo={this.props.updateToDo}
+          />
+        )}
+      </div>
     );
   }
 }

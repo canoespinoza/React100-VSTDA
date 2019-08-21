@@ -1,0 +1,2 @@
+Using React, I built a Very Simple ToDo App! It has full functionality for writing todos, assigning color based on priority, editing individual items, deleting items, and marking todos as completed.  
+Clone the repo, run npm install, and access the app on localhost:3000. 
